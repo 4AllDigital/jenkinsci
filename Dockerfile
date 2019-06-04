@@ -6,7 +6,27 @@ LABEL maintainer 4 All Digital  "joe@4alldigital.com"
 USER root
 
 # Install libs.
-RUN apt-get update && apt-get install -y libltdl7
+RUN apt-get update && \
+    apt-get -y install apt-transport-https \
+    rsync \
+    ca-certificates \
+    curl \
+    gnupg2 \
+    libltdl7 \
+    software-properties-common && \
+    curl -fsSL https://download.docker.com/linux/$(. /etc/os-release; echo "$ID")/gpg > /tmp/dkey; apt-key add /tmp/dkey && \
+    add-apt-repository \
+      "deb [arch=amd64] https://download.docker.com/linux/$(. /etc/os-release; echo "$ID") \
+      $(lsb_release -cs) \
+      stable" && \
+    apt-get update && \
+    apt-get -y install libltdl7 docker-ce && \
+    curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip" && \
+    unzip awscli-bundle.zip && \
+    ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
+
+# Re-assign default runtime user.
+USER jenkins
 
 # Re-assign default runtime user.
 USER jenkins
