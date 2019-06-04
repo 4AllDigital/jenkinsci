@@ -32,6 +32,12 @@ pipeline {
           docker tag ${ECR_CONTAINER_NAME}:latest ${ECR_REPO_URI}/${ECR_CONTAINER_NAME}:latest
           $(aws ecr get-login --region ${AWS_DEFAULT_REGION} --no-include-email)
           docker push ${ECR_REPO_URI}/${ECR_CONTAINER_NAME}:latest
+        '''
+      }
+    }
+    stage('DEPLOY') {
+      steps {
+        sh '''
           ecs -t ${ECS_DEPLOY_TIMEOUT} -c ${ECS_CLUSTER_NAME} -n ${ECS_SERVICE_NAME} -i ${ECR_REPO_URI}/${ECR_CONTAINER_NAME}:latest
         '''
       }
