@@ -5,10 +5,6 @@ pipeline {
     }
   }
   environment {
-    DISABLE_AUTH = 'true'
-    NPM_TOKEN = credentials('PRIVATE_NPM_TOKEN')
-    NPM_REGISTRY_URL = 'https://registry.npmjs.org/'
-    GH_TOKEN = credentials('GH_TOKEN')
     ECR_CONTAINER_NAME="ci-jenkins"
     ECR_REPO_URI="859167267990.dkr.ecr.eu-west-1.amazonaws.com"
     AWS_DEFAULT_REGION="eu-west-1"
