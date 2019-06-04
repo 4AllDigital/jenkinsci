@@ -22,7 +22,7 @@ pipeline {
   stages {
     stage ('NOTIFY SLACK') {
       steps {
-        slackSend (color: '#e7ec63', channel: "#react-frontend", message: "STARTED: Job '$JOB_NAME [$BUILD_ID]' ($RUN_DISPLAY_URL)")
+        slackSend (color: '#e7ec63', channel: "#jenkins", message: "STARTED: Job '$JOB_NAME [$BUILD_ID]' ($RUN_DISPLAY_URL)")
       }
     }
     stage('BUILD') {
