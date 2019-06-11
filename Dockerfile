@@ -26,8 +26,8 @@ RUN apt-get update && \
     unzip awscli-bundle.zip && \
     ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
 
-# Re-assign default runtime user.
-USER jenkins
+RUN usermod -a -G sudo jenkins
+RUN echo "jenkins ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 # Re-assign default runtime user.
 USER jenkins
